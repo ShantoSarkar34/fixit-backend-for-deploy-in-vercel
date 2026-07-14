@@ -1,0 +1,22 @@
+model Booking {
+  id             Int           @id @default(autoincrement())
+  customerId     Int
+  customer       User          @relation("CustomerBookings", fields: [customerId], references: [id])
+  technicianId   Int
+  technician     User          @relation("TechnicianBookings", fields: [technicianId], references: [id])
+  serviceId      Int
+  service        Service       @relation(fields: [serviceId], references: [id])
+  availabilityId Int           @unique
+  availability   Availability  @relation(fields: [availabilityId], references: [id])
+  bookingDate    DateTime      @db.Date
+  status         BookingStatus @default(PENDING)
+  address        String?
+  note           String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  payment Payment?
+  review  Review?
+
+  @@map("bookings")
+}

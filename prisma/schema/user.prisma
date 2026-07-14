@@ -1,0 +1,30 @@
+model User {
+  id       Int        @id @default(autoincrement())
+  name     String
+  email    String     @unique
+  password String
+  role     Role
+  phone    String?
+  photo    String?
+  address  String?
+  status   UserStatus @default(ACTIVE)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  technicianProfile TechnicianProfile?
+
+  services Service[]
+
+  customerBookings   Booking[] @relation("CustomerBookings")
+  technicianBookings Booking[] @relation("TechnicianBookings")
+
+  customerReviews   Review[] @relation("CustomerReviews")
+  technicianReviews Review[] @relation("TechnicianReviews")
+
+  payments Payment[]
+
+  availability Availability[]
+
+  @@map("users")
+}

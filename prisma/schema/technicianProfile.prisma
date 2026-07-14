@@ -1,0 +1,25 @@
+model TechnicianProfile {
+  id Int @id @default(autoincrement())
+
+  userId Int  @unique
+  user   User @relation(fields: [userId], references: [id])
+
+  bio             String?
+  experience      String?
+  yearsExperience Int
+  location        String
+
+  averageRating Float @default(0)
+  totalReviews  Int   @default(0)
+
+  isVerified Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  services       Service[]
+  availabilities Availability[]
+  reviews        Review[]
+
+  @@map("technician_profiles")
+}

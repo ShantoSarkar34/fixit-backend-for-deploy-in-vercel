@@ -1,0 +1,17 @@
+model Availability {
+  id           Int               @id @default(autoincrement())
+  technicianId Int
+  technician   TechnicianProfile @relation(fields: [technicianId], references: [id], onDelete: Cascade)
+  date         DateTime          @db.Date
+  startTime    String
+  endTime      String
+  status       SlotStatus        @default(AVAILABLE)
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  booking Booking?
+  user    User?    @relation(fields: [userId], references: [id])
+  userId  Int?
+
+  @@map("availabilities")
+}

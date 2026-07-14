@@ -1,0 +1,26 @@
+model Payment {
+  id Int @id @default(autoincrement())
+
+  bookingId Int     @unique
+  booking   Booking @relation(fields: [bookingId], references: [id])
+
+  customerId Int
+  customer   User @relation(fields: [customerId], references: [id])
+
+  amount Decimal @db.Decimal(10, 2)
+
+  method String
+
+  provider PaymentProvider
+
+  transactionId String @unique
+
+  status PaymentStatus @default(PENDING)
+
+  paidAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("payments")
+}

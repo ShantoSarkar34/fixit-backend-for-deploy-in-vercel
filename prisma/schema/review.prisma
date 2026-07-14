@@ -1,0 +1,26 @@
+model Review {
+  id Int @id @default(autoincrement())
+
+  bookingId Int     @unique
+  booking   Booking @relation(fields: [bookingId], references: [id])
+
+  customerId Int
+  customer   User @relation("CustomerReviews", fields: [customerId], references: [id])
+
+  technicianId Int
+  technician   User @relation("TechnicianReviews", fields: [technicianId], references: [id])
+
+  serviceId Int
+  service   Service @relation(fields: [serviceId], references: [id])
+
+  rating Int
+
+  comment String?
+
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  technicianProfile   TechnicianProfile? @relation(fields: [technicianProfileId], references: [id])
+  technicianProfileId Int?
+
+  @@map("reviews")
+}

@@ -1,0 +1,32 @@
+model Service {
+  id Int @id @default(autoincrement())
+
+  technicianId Int
+  technician   TechnicianProfile @relation(fields: [technicianId], references: [id])
+
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  title       String
+  description String
+
+  price Decimal @db.Decimal(10, 2)
+
+  duration Int
+
+  location String
+
+  availability AvailabilityStatus @default(AVAILABLE)
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  bookings Booking[]
+  reviews  Review[]
+  user     User?     @relation(fields: [userId], references: [id])
+  userId   Int?
+
+  @@map("services")
+}

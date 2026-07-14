@@ -1,0 +1,8 @@
+node_modules
+dist
+prisma/generated
+.env
+*.log
+.DS_Store
+
+.vercel
