@@ -32,6 +32,7 @@ const config = {
     sslcommerz_store_id: process.env.SSLCOMMERZ_STORE_ID,
     sslcommerz_store_password: process.env.SSLCOMMERZ_STORE_PASSWORD,
   },
+
 };
 
 export default config;

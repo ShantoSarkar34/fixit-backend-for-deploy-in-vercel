@@ -1,12 +1,12 @@
 import httpStatus from 'http-status';
-import prisma from '../../lib/prisma';
-import ApiError from '../../utils/ApiError';
-import { Prisma } from '../../../prisma/generated/index';
+import prisma from '../../lib/prisma.js';
+import ApiError from '../../utils/ApiError.js';
+import { Prisma } from '../../../prisma/generated/index.js';
 import {
   TAvailabilitySlot,
   TTechnicianFilters,
   TUpsertTechnicianProfilePayload,
-} from './technician.interface';
+} from './technician.interface.js';
 
 const getAllTechnicians = async (filters: TTechnicianFilters) => {
   const { categoryId, location, search } = filters;
@@ -38,7 +38,7 @@ const getAllTechnicians = async (filters: TTechnicianFilters) => {
 };
 
 const getTechnicianById = async (id: number) => {
-  return prisma.technicianProfile.findUnique({
+  const technician = await prisma.technicianProfile.findUnique({
     where: { id },
     include: {
       user: { select: { id: true, name: true, email: true, phone: true } },
@@ -50,8 +50,17 @@ const getTechnicianById = async (id: number) => {
         },
         orderBy: { createdAt: 'desc' },
       },
+      availabilities: {
+        where: { status: 'AVAILABLE' },
+        orderBy: [{ date: 'asc' }, { startTime: 'asc' }],
+      },
     },
   });
+
+  if (!technician) return null;
+
+  const { availabilities, ...rest } = technician;
+  return { ...rest, availability: availabilities };
 };
 
 const upsertMyProfile = async (userId: number, payload: TUpsertTechnicianProfilePayload) => {

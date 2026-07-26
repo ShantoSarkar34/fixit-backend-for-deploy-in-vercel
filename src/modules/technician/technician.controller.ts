@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
-import catchAsync from '../../utils/catchAsync';
-import sendResponse from '../../utils/sendResponse';
-import ApiError from '../../utils/ApiError';
-import { TechnicianService } from './technician.service';
-import { TTechnicianFilters } from './technician.interface';
+import catchAsync from '../../utils/catchAsync.js';
+import sendResponse from '../../utils/sendResponse.js';
+import ApiError from '../../utils/ApiError.js';
+import { TechnicianService } from './technician.service.js';
+import { TTechnicianFilters } from './technician.interface.js';
 
 const getAllTechnicians = catchAsync(async (req: Request, res: Response) => {
   const technicians = await TechnicianService.getAllTechnicians(

@@ -34,8 +34,11 @@ app.get('/', (req: Request, res: Response) => {
   res.status(httpStatus.OK).json({
     success: true,
     message: 'FixItNow API is running...!',
+    url : config.frontend_url
   });
 });
+
+console.log(config.frontend_url);
 
 // TODO: mount module routers here, e.g.
 app.use('/api/auth', AuthRoutes);
